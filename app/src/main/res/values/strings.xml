@@ -1,3 +1,7 @@
 <resources>
     <string name="app_name">Balloon Blast</string>
+    <string name="level_label">Level:</string>
+    <string name="score_label">Score:</string>
+    <string name="max_number">99</string>
+    <string name="popping_pin">Popping Pin</string>
 </resources>
