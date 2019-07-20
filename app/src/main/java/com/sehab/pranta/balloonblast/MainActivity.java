@@ -24,7 +24,7 @@ public class MainActivity extends AppCompatActivity {
         getWindow().setBackgroundDrawableResource(R.drawable.back);
         mContentView = findViewById(R.id.activity_main);
         FullScreen();
-        ViewTreeObserver viewTreeObserver =  mContentView.getViewTreeObserver();
+        ViewTreeObserver viewTreeObserver =  mContentView.getViewTreeObserver(); //event listener
         if (viewTreeObserver.isAlive()){
             viewTreeObserver.addOnGlobalLayoutListener(new ViewTreeObserver.OnGlobalLayoutListener() {
                 @Override
@@ -45,7 +45,7 @@ public class MainActivity extends AppCompatActivity {
 
         mContentView.setOnTouchListener(new View.OnTouchListener() {
             @Override
-            public boolean onTouch(View v, MotionEvent event) {
+            public boolean onTouch(View v, MotionEvent event) {   //to launch object by touch on screen
                 if (event.getAction() == MotionEvent.ACTION_UP) {
                     Balloon b = new Balloon(MainActivity.this, mBalloonColors[mNextColor], 100);
                     b.setX(event.getX());
