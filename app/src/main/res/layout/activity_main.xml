@@ -23,7 +23,8 @@
             android:layout_centerVertical="true"
             android:textStyle="bold"
             android:textSize="19dp"
-            android:text="@string/play_game" />
+            android:text="@string/play_game"
+            android:onClick="goButtonClickHandler"/>
 
         <LinearLayout
             android:id="@+id/status_display"
