@@ -1,5 +1,6 @@
 package com.sehab.pranta.balloonblast;
 
+import android.content.Intent;
 import android.graphics.Color;
 import android.os.AsyncTask;
 import android.support.v7.app.AppCompatActivity;
@@ -14,6 +15,8 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.sehab.pranta.balloonblast.utils.Balloon;
+import com.sehab.pranta.balloonblast.utils.HighScoreHelper;
+import com.sehab.pranta.balloonblast.utils.SimpleAlertDialog;
 
 import java.util.ArrayList;
 import java.util.Date;
@@ -21,9 +24,9 @@ import java.util.List;
 import java.util.Random;
 
 public class MainActivity extends AppCompatActivity implements Balloon.BalloonListener {
-    private static final int BALLOONS_PER_LEVEL = 3;
+    private static final int BALLOONS_PER_LEVEL = 10;
     private ViewGroup mContentView;
-  private int[] mBalloonColors = new int[3];
+  private int[] mBalloonColors = new int[5];
   private int mNextColor,mScreenWidth,mScreenHeight;
     public static final int MIN_ANIMATION_DELAY=500;
     public static final int MAX_ANIMATION_DELAY=1500;
@@ -44,8 +47,13 @@ public class MainActivity extends AppCompatActivity implements Balloon.BalloonLi
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         mBalloonColors[0]= Color.argb(255,255,0,0);
-        mBalloonColors[1]= Color.argb(255,0,255,0);
-        mBalloonColors[2]= Color.argb(255,255,0,255);
+        int  magenta  = 0xffff00ff;
+        mBalloonColors[1]=magenta;
+        mBalloonColors[2]= Color.argb(255,0,0,255);
+        int yellow = 0xffffff00;
+        mBalloonColors[3]=yellow;
+        int black = 0xff000000;
+        mBalloonColors[4]=black;
         getWindow().setBackgroundDrawableResource(R.drawable.back);
         mContentView = findViewById(R.id.activity_main);
         FullScreen();
@@ -67,31 +75,6 @@ public class MainActivity extends AppCompatActivity implements Balloon.BalloonLi
                  FullScreen();
             }
         });
-
-  /*      mContentView.setOnTouchListener(new View.OnTouchListener() {
-            @Override
-            public boolean onTouch(View v, MotionEvent event) {   //to launch object by touch on screen
-                if (event.getAction() == MotionEvent.ACTION_UP) {
-                    Balloon b = new Balloon(MainActivity.this, mBalloonColors[mNextColor], 100);
-                    b.setX(event.getX());
-                    b.setY(mScreenHeight);
-                    mContentView.addView(b);
-                    b.releaseBalloon(mScreenHeight, 3000);
-                    if (mNextColor + 1 == mBalloonColors.length) {
-                        mNextColor = 0;
-                    } else {
-                        mNextColor++;
-                    }
-
-                }
-
-                return false;
-            }
-
-        });
-        */
-
-
 
 
         mScoreDisplay = findViewById(R.id.score_display);
@@ -190,9 +173,9 @@ public class MainActivity extends AppCompatActivity implements Balloon.BalloonLi
         }
     }
 
-    private void gameOver(boolean b) {
-        Toast.makeText(this,"Game Over!",Toast.LENGTH_SHORT).show();
-        for (Balloon balloon:mBalloons){
+    private void gameOver(boolean AllPinsUsed) {
+     //   Toast.makeText(this,"Game Over!",Toast.LENGTH_SHORT).show();
+        for (Balloon balloon : mBalloons){
             mContentView.removeView(balloon);
             balloon.setPopped(true);
         }
@@ -200,6 +183,24 @@ public class MainActivity extends AppCompatActivity implements Balloon.BalloonLi
         mPlaying = false;
         mGameStopped = true;
         mGoButton.setText("Start Game");
+       String st="",st2="";
+
+        if(AllPinsUsed){
+            int x = HighScoreHelper.getTopScore(this);
+          st = Integer.toString(x);
+
+            if (HighScoreHelper.isTopScore(this,mScore)){
+              HighScoreHelper.setTopScore(this,mScore);
+              st = Integer.toString(mScore);
+
+            }
+            st2 = Integer.toString(mScore);
+            Intent intent =new Intent(MainActivity.this,EndActivity.class);
+           intent.putExtra("MSG",st);
+            intent.putExtra("MSG2",st2);
+             startActivity(intent);
+        }
+
     }
 
     private void updateDisplay() {
