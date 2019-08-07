@@ -16,7 +16,7 @@ import android.widget.Toast;
 
 import com.sehab.pranta.balloonblast.utils.Balloon;
 import com.sehab.pranta.balloonblast.utils.HighScoreHelper;
-import com.sehab.pranta.balloonblast.utils.SimpleAlertDialog;
+import com.sehab.pranta.balloonblast.utils.SoundHelper;
 
 import java.util.ArrayList;
 import java.util.Date;
@@ -41,6 +41,7 @@ public class MainActivity extends AppCompatActivity implements Balloon.BalloonLi
     private boolean mPlaying;
     private boolean mGameStopped =true;
     private int mBalloonsPopped;
+    private SoundHelper mSoundHelper;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -56,7 +57,7 @@ public class MainActivity extends AppCompatActivity implements Balloon.BalloonLi
         mBalloonColors[4]=black;
         getWindow().setBackgroundDrawableResource(R.drawable.back);
         mContentView = findViewById(R.id.activity_main);
-        FullScreen();
+   //     FullScreen();
         ViewTreeObserver viewTreeObserver =  mContentView.getViewTreeObserver(); //event listener
         if (viewTreeObserver.isAlive()){
             viewTreeObserver.addOnGlobalLayoutListener(new ViewTreeObserver.OnGlobalLayoutListener() {
@@ -88,6 +89,9 @@ public class MainActivity extends AppCompatActivity implements Balloon.BalloonLi
 
       updateDisplay();
 
+      mSoundHelper =new SoundHelper(this);
+      mSoundHelper.prepareMusicPlayer(this);
+
     } //oncreate ends
 
     private void  FullScreen(){
@@ -117,6 +121,7 @@ public class MainActivity extends AppCompatActivity implements Balloon.BalloonLi
         }
         mGameStopped = false;
         startLevel();
+        mSoundHelper.playMusic();
     }
     private void startLevel(){
         mLevel++;
@@ -148,7 +153,7 @@ public class MainActivity extends AppCompatActivity implements Balloon.BalloonLi
     @Override
     public void popBalloon(Balloon balloon, boolean userTouch) {
         mBalloonsPopped++;
-
+        mSoundHelper.playSound();
         mContentView.removeView(balloon);
         mBalloons.remove(balloon);
 
@@ -175,6 +180,7 @@ public class MainActivity extends AppCompatActivity implements Balloon.BalloonLi
 
     private void gameOver(boolean AllPinsUsed) {
      //   Toast.makeText(this,"Game Over!",Toast.LENGTH_SHORT).show();
+        mSoundHelper.pauseMusic();
         for (Balloon balloon : mBalloons){
             mContentView.removeView(balloon);
             balloon.setPopped(true);
