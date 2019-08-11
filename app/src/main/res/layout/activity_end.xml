@@ -5,29 +5,49 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="#03DFF9"
-    android:id="@+id/activity_end"
-    tools:context=".EndActivity">
+    tools:context=".EndActivity"
+    android:id="@+id/activity_end">
 
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_centerHorizontal="true"
+        android:id="@+id/tv"
         android:text="Game Over!"
         android:textColor="#F91903"
         android:textSize="75dp"
         android:layout_marginTop="20dp"
         android:textStyle="bold" />
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="70dp"
+        android:layout_below="@+id/tv"
+        android:id="@+id/Bscore"
+        android:hint="Best Score:"
+        android:layout_marginTop="80dp"
+        android:textSize="50dp"
+        android:textStyle="bold"/>
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="70dp"
+        android:layout_below="@id/Bscore"
+        android:id="@+id/Mscore"
+        android:textSize="50dp"
+        android:layout_marginTop="20dp"
+        android:hint="Your Score:"/>
 
     <Button
-        android:layout_width="309dp"
+        android:layout_width="303dp"
         android:layout_height="77dp"
+        android:layout_below="@+id/Mscore"
         android:layout_centerHorizontal="true"
-        android:layout_marginTop="500dp"
-        android:background="#F9EA03"
+        android:layout_marginTop="70dp"
+        android:background="#FCF100"
         android:text="Play Again"
-        android:textColor="#F90355"
+        android:textColor="#F31E0C"
+        android:id="@+id/btnE"
         android:textSize="50dp"
-        android:id="@+id/btn2"
         android:textStyle="bold" />
+
 
 </RelativeLayout>
