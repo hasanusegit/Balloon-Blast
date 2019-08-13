@@ -32,6 +32,7 @@ public class Balloon extends ImageView implements Animator.AnimatorListener, Val
         ViewGroup.LayoutParams params = new ViewGroup.LayoutParams(dpWidth,dpHeight); //LayoutParams to view objects layout
         setLayoutParams(params);
     }
+    //this file updated
 
 
 
