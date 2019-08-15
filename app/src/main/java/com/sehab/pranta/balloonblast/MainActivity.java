@@ -110,7 +110,7 @@ public class MainActivity extends AppCompatActivity implements Balloon.BalloonLi
         super.onResume();
         FullScreen();
     }
-    //this file updated
+    //this file updated today
 
     private void startGame(){
         FullScreen();
