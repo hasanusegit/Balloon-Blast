@@ -21,6 +21,7 @@ public class Balloon extends ImageView implements Animator.AnimatorListener, Val
         super(context);
     }
 
+
     public Balloon(Context context,int color,int rawHeight) { //rawHeight is absolute pixels and we converted by constructor
         super(context);
         mListener = (BalloonListener) context;

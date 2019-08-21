@@ -52,6 +52,9 @@ public class SoundHelper {
             mSoundPool.play(mSoundID, mVolume, mVolume, 1, 0, 1f);
         }
     }
+    public void pauseSound(){
+        mSoundPool.autoPause();
+    }
 
     //for background music
     public void prepareMusicPlayer(Context context){

@@ -18,18 +18,29 @@
             android:id="@+id/go_button"
             style="?android:borderlessButtonStyle"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_height="match_parent"
             android:layout_alignParentStart="true"
-            android:layout_centerVertical="true"
-            android:textStyle="bold"
-            android:textSize="19dp"
+            android:onClick="goButtonClickHandler"
             android:text="@string/play_game"
-            android:onClick="goButtonClickHandler"/>
+            android:textSize="16dp"
+            android:textStyle="bold" />
+
+        <Button
+            android:id="@+id/pauseBtn"
+            style="?android:borderlessButtonStyle"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_marginLeft="140dp"
+            android:onClick="pausePlay"
+            android:text="HELP and PAUSE"
+            android:textSize="15dp"
+            android:textStyle="bold"
+            tools:ignore="RelativeOverlap" />
 
         <LinearLayout
             android:id="@+id/status_display"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_width="184dp"
+            android:layout_height="39dp"
             android:layout_alignParentEnd="true"
             android:layout_centerVertical="true"
             android:layout_marginEnd="8dp"
@@ -39,8 +50,9 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_alignTop="@+id/status_display"
                 android:text="@string/level_label"
-                android:textSize="20dp"
+                android:textSize="17dp"
                 android:textStyle="bold"
                 tools:ignore="RelativeOverlap" />
 
@@ -48,7 +60,9 @@
                 android:id="@+id/level_display"
                 android:layout_width="40dp"
                 android:layout_height="wrap_content"
-                android:layout_marginEnd="32dp"
+                android:layout_alignTop="@+id/status_display"
+                android:layout_alignBottom="@+id/status_display"
+                android:layout_marginEnd="8dp"
                 android:gravity="end"
                 android:text="@string/max_number"
                 android:textSize="20dp"
@@ -58,8 +72,9 @@
                 android:id="@+id/score_label"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_alignTop="@+id/status_display"
                 android:text="@string/score_label"
-                android:textSize="20dp"
+                android:textSize="17dp"
                 android:textStyle="bold"
                 tools:ignore="RelativeOverlap" />
 
@@ -67,12 +82,22 @@
                 android:id="@+id/score_display"
                 android:layout_width="40dp"
                 android:layout_height="wrap_content"
-                android:layout_marginEnd="16dp"
+                android:layout_marginEnd="20dp"
                 android:gravity="end"
                 android:text="@string/max_number"
                 android:textSize="20dp"
                 android:textStyle="bold" />
         </LinearLayout>
+
+        <TextView
+            android:id="@+id/chance"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="()"
+            android:textSize="23dp"
+            android:layout_marginLeft="280dp"
+            android:textStyle="normal"
+            tools:ignore="RelativeOverlap"/>
 
     </RelativeLayout>
 

@@ -1,11 +1,10 @@
 package com.sehab.pranta.balloonblast;
-
 import android.content.Intent;
 import android.graphics.Color;
 import android.os.AsyncTask;
+import android.os.Handler;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.ViewTreeObserver;
@@ -22,6 +21,8 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.Random;
+import java.util.Timer;
+import java.util.TimerTask;
 
 public class MainActivity extends AppCompatActivity implements Balloon.BalloonListener {
     private static final int BALLOONS_PER_LEVEL = 10;
@@ -32,32 +33,42 @@ public class MainActivity extends AppCompatActivity implements Balloon.BalloonLi
     public static final int MAX_ANIMATION_DELAY=1500;
     public static final int MIN_ANIMATION_DURATION=1000;
     public static final int MAX_ANIMATION_DURATION=8000;
+    private int HELP=2;
     private int mLevel,mScore,mPinsUsed;
-    TextView mScoreDisplay,mLevelDisplay;
+    TextView mScoreDisplay,mLevelDisplay,helpPause;
     public static final int NUMBER_OF_PINS=5;
     private List<ImageView> mPinImages=new ArrayList<>();
     private List<Balloon> mBalloons = new ArrayList<>();
-    private Button mGoButton;
+    private Button mGoButton , pauseButton;
     private boolean mPlaying;
     private boolean mGameStopped =true;
     private int mBalloonsPopped;
     private SoundHelper mSoundHelper;
+    private boolean pause_flg = false; //pause button status
+   //initialize class for pause button
+    private Timer timer = new Timer();
+    private Handler handler = new Handler();
+
+    int black = 0xff000000;
+    int  magenta  = 0xffff00ff;
+    int yellow = 0xffffff00;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         mBalloonColors[0]= Color.argb(255,255,0,0);
-        int  magenta  = 0xffff00ff;
+    //    int  magenta  = 0xffff00ff;
         mBalloonColors[1]=magenta;
         mBalloonColors[2]= Color.argb(255,0,0,255);
-        int yellow = 0xffffff00;
+    //    int yellow = 0xffffff00;
         mBalloonColors[3]=yellow;
-        int black = 0xff000000;
+     //   int black = 0xff000000;
         mBalloonColors[4]=black;
         getWindow().setBackgroundDrawableResource(R.drawable.back);
         mContentView = findViewById(R.id.activity_main);
-   //     FullScreen();
+         FullScreen();
         ViewTreeObserver viewTreeObserver =  mContentView.getViewTreeObserver(); //event listener
         if (viewTreeObserver.isAlive()){
             viewTreeObserver.addOnGlobalLayoutListener(new ViewTreeObserver.OnGlobalLayoutListener() {
@@ -86,11 +97,15 @@ public class MainActivity extends AppCompatActivity implements Balloon.BalloonLi
         mPinImages.add((ImageView) findViewById(R.id.pushpin4));
         mPinImages.add((ImageView) findViewById(R.id.pushpin5));
         mGoButton = findViewById(R.id.go_button);
+        pauseButton = findViewById(R.id.pauseBtn);
+        helpPause = findViewById(R.id.chance);
 
       updateDisplay();
 
       mSoundHelper =new SoundHelper(this);
       mSoundHelper.prepareMusicPlayer(this);
+
+
 
     } //oncreate ends
 
@@ -112,6 +127,10 @@ public class MainActivity extends AppCompatActivity implements Balloon.BalloonLi
     }
 
     private void startGame(){
+        getWindow().setBackgroundDrawableResource(R.drawable.back);
+        HELP=2;
+        String str = Integer.toString(HELP);
+        helpPause.setText("("+str+")");
         FullScreen();
         mScore =0;
         mLevel =0;
@@ -125,6 +144,12 @@ public class MainActivity extends AppCompatActivity implements Balloon.BalloonLi
     }
     private void startLevel(){
         mLevel++;
+        if (mLevel>4 && mLevel<10){
+            getWindow().setBackgroundDrawableResource(R.drawable.modern_background);
+        }
+        if (mLevel>=10){
+            getWindow().setBackgroundDrawableResource(R.drawable.back_final);
+        }
         updateDisplay();
         BalloonLauncher launcher = new BalloonLauncher();
         launcher.execute(mLevel);
@@ -133,11 +158,13 @@ public class MainActivity extends AppCompatActivity implements Balloon.BalloonLi
         mGoButton.setText("Stop Game");
     }
 
+
     private void finishLevel(){
         Toast.makeText(this,String.format("Finished Level %d",mLevel),Toast.LENGTH_SHORT).show();
         mPlaying=false;
         mGoButton.setText(String.format("Start Level %d",mLevel+1));
     }
+
 
     public void goButtonClickHandler(View view) {
         if (mPlaying){
@@ -156,10 +183,12 @@ public class MainActivity extends AppCompatActivity implements Balloon.BalloonLi
         mSoundHelper.playSound();
         mContentView.removeView(balloon);
         mBalloons.remove(balloon);
-
+     //   int keepTrack=mBalloonsPopped;
         if(userTouch){
-            mScore++;
-        }else {
+           mScore++;
+        }
+        else {
+
             mPinsUsed++;
             if(mPinsUsed <= mPinImages.size()){
                 mPinImages.get(mPinsUsed - 1).setImageResource(R.drawable.pin_off);
@@ -171,6 +200,14 @@ public class MainActivity extends AppCompatActivity implements Balloon.BalloonLi
                 Toast.makeText(this,"missed one!",Toast.LENGTH_SHORT).show();
             }
         }
+   //    if (userTouch && mBalloons.get(4).getId()==4){
+   //       mScore=mScore-2;
+
+   //    }
+
+      //  mBalloonsPopped%5==0 &&
+        yy();
+
         updateDisplay();
 
         if(mBalloonsPopped == BALLOONS_PER_LEVEL){
@@ -178,8 +215,8 @@ public class MainActivity extends AppCompatActivity implements Balloon.BalloonLi
         }
     }
 
+
     private void gameOver(boolean AllPinsUsed) {
-     //   Toast.makeText(this,"Game Over!",Toast.LENGTH_SHORT).show();
         mSoundHelper.pauseMusic();
         for (Balloon balloon : mBalloons){
             mContentView.removeView(balloon);
@@ -213,6 +250,34 @@ public class MainActivity extends AppCompatActivity implements Balloon.BalloonLi
        mScoreDisplay.setText(String.valueOf(mScore));
        mLevelDisplay.setText(String.valueOf(mLevel));
     }
+
+
+
+
+    public void pausePlay(View view) {
+       if (HELP!=-1) {
+           HELP--;
+       }
+       mScore =mScore+10;
+
+       String str = Integer.toString(HELP);
+       helpPause.setText("("+str+")");
+       if (HELP==-1){
+           int keep = HELP;
+           String str2 = Integer.toString(keep+1);
+           helpPause.setText("("+str2+")");
+       }
+        if (HELP!=-1) {
+            for (Balloon balloon : mBalloons) {
+                mContentView.removeView(balloon);
+                balloon.setPopped(true);
+            }
+            mBalloons.clear();
+            finishLevel();
+        }
+
+    }
+
 
     private class BalloonLauncher extends AsyncTask<Integer, Integer, Void> {
 
@@ -281,6 +346,16 @@ public class MainActivity extends AppCompatActivity implements Balloon.BalloonLi
         balloon.releaseBalloon(mScreenHeight, duration);
 
     }
+
+    public void yy(){
+        Balloon b1 = new Balloon(this,mBalloonColors[4],150);
+        for(int i=0;i<mBalloons.size();i++) {
+            if (mBalloons.get(i) == b1) {
+                mScore=mScore-2;
+            }
+        }
+    }
+
 
 
 }
