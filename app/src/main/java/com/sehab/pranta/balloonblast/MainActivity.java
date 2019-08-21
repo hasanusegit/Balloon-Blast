@@ -125,6 +125,7 @@ public class MainActivity extends AppCompatActivity implements Balloon.BalloonLi
         super.onResume();
         FullScreen();
     }
+    //this file updated today
 
     private void startGame(){
         getWindow().setBackgroundDrawableResource(R.drawable.back);

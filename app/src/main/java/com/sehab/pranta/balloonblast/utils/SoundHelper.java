@@ -56,7 +56,7 @@ public class SoundHelper {
         mSoundPool.autoPause();
     }
 
-    //for background music
+    //for background music mysterious piano
     public void prepareMusicPlayer(Context context){
         mMusicPlayer = MediaPlayer.create(context.getApplicationContext(), R.raw.pleasant_music);
         mMusicPlayer.setVolume( .5f, .5f);
