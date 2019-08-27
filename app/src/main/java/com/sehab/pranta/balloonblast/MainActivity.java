@@ -151,6 +151,9 @@ public class MainActivity extends AppCompatActivity implements Balloon.BalloonLi
         if (mLevel>=10){
             getWindow().setBackgroundDrawableResource(R.drawable.back_final);
         }
+        if(mLevel>20){
+            gameOver(true);
+        }
         updateDisplay();
         BalloonLauncher launcher = new BalloonLauncher();
         launcher.execute(mLevel);
