@@ -204,13 +204,7 @@ public class MainActivity extends AppCompatActivity implements Balloon.BalloonLi
                 Toast.makeText(this,"missed one!",Toast.LENGTH_SHORT).show();
             }
         }
-   //    if (userTouch && mBalloons.get(4).getId()==4){
-   //       mScore=mScore-2;
 
-   //    }
-
-      //  mBalloonsPopped%5==0 &&
-        yy();
 
         updateDisplay();
 
@@ -351,14 +345,6 @@ public class MainActivity extends AppCompatActivity implements Balloon.BalloonLi
 
     }
 
-    public void yy(){
-        Balloon b1 = new Balloon(this,mBalloonColors[4],150);
-        for(int i=0;i<mBalloons.size();i++) {
-            if (mBalloons.get(i) == b1) {
-                mScore=mScore-2;
-            }
-        }
-    }
 
 
 

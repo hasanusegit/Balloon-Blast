@@ -15,7 +15,7 @@
         android:id="@+id/tv"
         android:text="Game Over!"
         android:textColor="#F91903"
-        android:textSize="75dp"
+        android:textSize="74dp"
         android:layout_marginTop="10dp"
         android:textStyle="bold" />
     <TextView
