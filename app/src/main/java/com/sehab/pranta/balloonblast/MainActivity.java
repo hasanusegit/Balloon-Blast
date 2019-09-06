@@ -36,7 +36,7 @@ public class MainActivity extends AppCompatActivity implements Balloon.BalloonLi
     private int HELP=2;
     private int mLevel,mScore,mPinsUsed;
     TextView mScoreDisplay,mLevelDisplay,helpPause;
-    public static final int NUMBER_OF_PINS=5;
+    public static final int NUMBER_OF_PINS=5;     //number of chance for player
     private List<ImageView> mPinImages=new ArrayList<>();
     private List<Balloon> mBalloons = new ArrayList<>();
     private Button mGoButton , pauseButton;

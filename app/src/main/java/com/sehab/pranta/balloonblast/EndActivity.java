@@ -31,16 +31,15 @@ public class EndActivity extends AppCompatActivity {
 
 
 
-        String output = getIntent().getStringExtra("MSG");
+        String output = getIntent().getStringExtra("MSG");   //reciving score from main activity
         textView.setText("Best Score:"+" "+output);
         String output2 = getIntent().getStringExtra("MSG2");
         textView2.setText("Your Score:"+" "+output2);
 
 
-
     } //oncreate ends
 
-    private void  FullScreen(){
+    private void  FullScreen(){                    //to view in full screen
         ViewGroup rootLayout = (ViewGroup) findViewById(R.id.activity_end);
         rootLayout.setSystemUiVisibility(View.SYSTEM_UI_FLAG_LOW_PROFILE
                 | View.SYSTEM_UI_FLAG_FULLSCREEN

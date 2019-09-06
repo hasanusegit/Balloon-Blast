@@ -16,7 +16,7 @@ public class WelcomeActivity extends AppCompatActivity {
         setContentView(R.layout.activity_welcome);
         button=findViewById(R.id.btnW);
 
-        button.setOnClickListener(new View.OnClickListener() {
+        button.setOnClickListener(new View.OnClickListener() { //changing activity
             @Override
             public void onClick(View v) {
                 Intent intent =new Intent(WelcomeActivity.this,MainActivity.class);
