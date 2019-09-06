@@ -36,13 +36,7 @@ public class EndActivity extends AppCompatActivity {
         String output2 = getIntent().getStringExtra("MSG2");
         textView2.setText("Your Score:"+" "+output2);
 
-    /*   full.setOnClickListener(new View.OnClickListener() {
-           @Override
-           public void onClick(View v) {
-               FullScreen();
-           }
-       });
-  */
+
 
     } //oncreate ends
 

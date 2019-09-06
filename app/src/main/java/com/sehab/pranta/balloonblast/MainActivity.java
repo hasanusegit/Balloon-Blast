@@ -44,12 +44,8 @@ public class MainActivity extends AppCompatActivity implements Balloon.BalloonLi
     private boolean mGameStopped =true;
     private int mBalloonsPopped;
     private SoundHelper mSoundHelper;
-    private boolean pause_flg = false; //pause button status
-   //initialize class for pause button
-    private Timer timer = new Timer();
-    private Handler handler = new Handler();
 
-    int black = 0xff000000;
+    int black = 0xff000000;    //three colours of balloon
     int  magenta  = 0xffff00ff;
     int yellow = 0xffffff00;
 
@@ -58,13 +54,13 @@ public class MainActivity extends AppCompatActivity implements Balloon.BalloonLi
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        mBalloonColors[0]= Color.argb(255,255,0,0);
-    //    int  magenta  = 0xffff00ff;
+        mBalloonColors[0]= Color.argb(255,255,0,0); //here two colours of balloon
+
         mBalloonColors[1]=magenta;
         mBalloonColors[2]= Color.argb(255,0,0,255);
-    //    int yellow = 0xffffff00;
+
         mBalloonColors[3]=yellow;
-     //   int black = 0xff000000;
+
         mBalloonColors[4]=black;
         getWindow().setBackgroundDrawableResource(R.drawable.back);
         mContentView = findViewById(R.id.activity_main);
@@ -89,7 +85,7 @@ public class MainActivity extends AppCompatActivity implements Balloon.BalloonLi
         });
 
 
-        mScoreDisplay = findViewById(R.id.score_display);
+        mScoreDisplay = findViewById(R.id.score_display);   //initializing display and pin icon raphics
       mLevelDisplay = findViewById(R.id.level_display);
         mPinImages.add((ImageView) findViewById(R.id.pushpin1));
         mPinImages.add((ImageView) findViewById(R.id.pushpin2));
@@ -125,7 +121,7 @@ public class MainActivity extends AppCompatActivity implements Balloon.BalloonLi
         super.onResume();
         FullScreen();
     }
-    //this file updated today
+
 
     private void startGame(){
         getWindow().setBackgroundDrawableResource(R.drawable.back);
@@ -143,7 +139,7 @@ public class MainActivity extends AppCompatActivity implements Balloon.BalloonLi
         startLevel();
         mSoundHelper.playMusic();
     }
-    private void startLevel(){
+    private void startLevel(){  // starts each level by maintaining some condition
         mLevel++;
         if (mLevel>4 && mLevel<10){
             getWindow().setBackgroundDrawableResource(R.drawable.modern_background);
@@ -187,7 +183,7 @@ public class MainActivity extends AppCompatActivity implements Balloon.BalloonLi
         mSoundHelper.playSound();
         mContentView.removeView(balloon);
         mBalloons.remove(balloon);
-     //   int keepTrack=mBalloonsPopped;
+
         if(userTouch){
            mScore++;
         }
@@ -350,4 +346,3 @@ public class MainActivity extends AppCompatActivity implements Balloon.BalloonLi
 
 }
 
-//main activity updated
